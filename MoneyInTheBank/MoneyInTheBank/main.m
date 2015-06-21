@@ -14,15 +14,14 @@
 
 -(BOOL)withdraw:(int)amount;
 -(void)deposit:(int)amount;
-
 @end
 
 @implementation BankAccount
 
--(BOOL)withdraw:(int) amount{
+-(BOOL)withdraw:(int) amount {
     int left = self.balance - amount;
     if (left<0) {
-        NSLog(@"Insufficient Funds");
+        NSLog(@"No money no problems, right?");
         return NO;
     }
     else{
@@ -33,6 +32,7 @@
 }
 -(void)deposit:(int)amount{
     self.balance = self.balance + amount;
+    NSLog(@"Z'money in ZBank: %d", self.balance);
 }
 
 @end
@@ -61,9 +61,20 @@
     BOOL gotMoney = [self.account withdraw:amount];
     if (gotMoney) {
         self.moneyInPocket = self.moneyInPocket + amount;
-        NSLog(@"$%d in pocket", self.moneyInPocket);
+        NSLog(@"$%d in ya pocket", self.moneyInPocket);
     }
 
+}
+
+-(void) depositMoney:(int)amount{
+    if (self.moneyInPocket >= amount) {
+        [self.account deposit:amount];
+        self.moneyInPocket = self.moneyInPocket - amount;
+        NSLog(@"Z'money in Z'pocket: %d", self.moneyInPocket);
+    }
+    else{
+        NSLog(@"You is broke, Booboo :(");
+    }
 }
 
 
@@ -81,7 +92,8 @@ int main(int argc, const char * argv[]) {
         Patron *Natalia = [[Patron alloc] init];
         Natalia.moneyInPocket = 300;
         Natalia.account = account;
-        [Natalia withdrawMoney:20];
+        [Natalia withdrawMoney: 2];
+        [Natalia depositMoney:600];
 
     }
     return 0;
