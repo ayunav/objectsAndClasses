@@ -19,10 +19,28 @@
 
 @implementation Calculator
 
--(void)add:(int)a{
+-(void)add:(int)a {
     self.accumulator = self.accumulator + a;
-    //NSLog(@"%d", self.accumulator);
+    NSLog(@"%d", self.accumulator);
 }
+
+-(void)substract:(int)b {
+    self.accumulator = self.accumulator - b;
+    NSLog(@"%d", self.accumulator);
+
+}
+
+-(void)multiply:(int)c {
+    self.accumulator = self.accumulator * c;
+    NSLog(@"%d", self.accumulator);
+
+}
+
+-(void)divide:(int)d {
+    self.accumulator = self.accumulator / d;
+    NSLog(@"%d", self.accumulator);
+}
+
 
 
 @end
@@ -33,6 +51,9 @@ int main(int argc, const char * argv[]) {
         Calculator *computation = [[Calculator alloc] init];
         [computation add:4];
         [computation add:4];
+        [computation substract: 5];
+        [computation multiply:10];
+        [computation divide:5];
 
     }
     return 0;
