@@ -8,10 +8,26 @@
 
 #import <Foundation/Foundation.h>
 
+@interface Patron : NSObject
+
+@property (nonatomic) NSString *name;
+@property (nonatomic) int accountNumber;
+@property (nonatomic) int moneyInPocket;
+
+@end
+
+@implementation Patron
+
+
+@end
+
+
+//Bank Account
+
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        // insert code here...
-        NSLog(@"Hello, World!");
+
     }
     return 0;
 }
