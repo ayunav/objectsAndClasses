@@ -40,15 +40,12 @@
 @interface Patron : NSObject
 
 @property (nonatomic) NSString *name;
-//@property (nonatomic) BankAccount *account;
 @property (nonatomic) NSMutableArray *accounts;
 @property (nonatomic) int moneyInPocket;
 
 -(void) addAccount:(int) balance;
--(void) setBankAccount:(BankAccount*) anAccount;
--(void) withdrawMoney:(int)amount;
--(void) depositMoney:(int)amount;
-
+-(void) withdrawAmount:(int)amount fromAccount:(BankAccount *)account;
+-(void) depositAmount:(int)amount toAccount:(BankAccount *)account;
 
 @end
 
@@ -60,16 +57,9 @@
     [self.accounts addObject:newAccount];
 }
 
-//-(void) setBankAccount:(BankAccount*) anAccount{
-//
-//    self.account = anAccount;
-//}
-
--(void) withdrawMoney:(int)amount{
-    //get the Bank Account object from the array
-    //change that object's properties
+-(void) withdrawAmount:(int)amount fromAccount:(BankAccount *)account{
+    BOOL gotMoney = [account withdraw:amount];
     
-    BOOL gotMoney = [self.account withdraw:amount];
     if (gotMoney) {
         self.moneyInPocket = self.moneyInPocket + amount;
         NSLog(@"$%d in ya pocket", self.moneyInPocket);
@@ -77,9 +67,10 @@
     
 }
 
--(void) depositMoney:(int)amount{
+
+-(void) depositAmount:(int)amount toAccount:(BankAccount *)account{
     if (self.moneyInPocket >= amount) {
-        [self.account deposit:amount];
+        [account deposit:amount];
         self.moneyInPocket = self.moneyInPocket - amount;
         NSLog(@"Z'money in Z'pocket: %d", self.moneyInPocket);
     }
@@ -92,20 +83,14 @@
 @end
 
 
-
-
-
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
-//        BankAccount *account = [[BankAccount alloc] init];
-//        account.balance = 10000;
         Patron *Natalia = [[Patron alloc] init];
-        Natalia.moneyInPocket = 300;
         [Natalia addAccount:10000];
-        //Natalia.account = account;
-        [Natalia withdrawMoney: 2];
-        [Natalia depositMoney:600];
+        Natalia.moneyInPocket = 300;
+        [Natalia withdrawAmount:100 fromAccount:[Natalia.accounts firstObject]];
+        [Natalia depositAmount:2 toAccount:[Natalia.accounts firstObject]];
         
     }
     return 0;
