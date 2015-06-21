@@ -40,9 +40,11 @@
 @interface Patron : NSObject
 
 @property (nonatomic) NSString *name;
-@property (nonatomic) BankAccount *account;
+//@property (nonatomic) BankAccount *account;
+@property (nonatomic) NSMutableArray *accounts;
 @property (nonatomic) int moneyInPocket;
 
+-(void) addAccount:(int) balance;
 -(void) setBankAccount:(BankAccount*) anAccount;
 -(void) withdrawMoney:(int)amount;
 -(void) depositMoney:(int)amount;
@@ -52,18 +54,27 @@
 
 @implementation Patron
 
--(void) setBankAccount:(BankAccount*) anAccount{
-    self.account = anAccount;
+-(void) addAccount:(int) balance{
+    BankAccount *newAccount = [[BankAccount alloc] init];
+    newAccount.balance = balance;
+    [self.accounts addObject:newAccount];
 }
 
+//-(void) setBankAccount:(BankAccount*) anAccount{
+//
+//    self.account = anAccount;
+//}
+
 -(void) withdrawMoney:(int)amount{
+    //get the Bank Account object from the array
+    //change that object's properties
     
     BOOL gotMoney = [self.account withdraw:amount];
     if (gotMoney) {
         self.moneyInPocket = self.moneyInPocket + amount;
         NSLog(@"$%d in ya pocket", self.moneyInPocket);
     }
-
+    
 }
 
 -(void) depositMoney:(int)amount{
@@ -87,14 +98,15 @@
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
-        BankAccount *account = [[BankAccount alloc] init];
-        account.balance = 10000;
+//        BankAccount *account = [[BankAccount alloc] init];
+//        account.balance = 10000;
         Patron *Natalia = [[Patron alloc] init];
         Natalia.moneyInPocket = 300;
-        Natalia.account = account;
+        [Natalia addAccount:10000];
+        //Natalia.account = account;
         [Natalia withdrawMoney: 2];
         [Natalia depositMoney:600];
-
+        
     }
     return 0;
 }
