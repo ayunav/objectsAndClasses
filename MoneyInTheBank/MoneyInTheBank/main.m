@@ -8,21 +8,39 @@
 
 #import <Foundation/Foundation.h>
 
+@interface BankAccount : NSObject
+
+@property (nonatomic) int balance;
+
+@end
+
+@implementation BankAccount
+
+
+
+@end
+
 @interface Patron : NSObject
 
 @property (nonatomic) NSString *name;
-@property (nonatomic) int accountNumber;
+@property (nonatomic) BankAccount *account;
 @property (nonatomic) int moneyInPocket;
+
+-(void) setBankAccount:(BankAccount*) anAccount;
 
 @end
 
 @implementation Patron
 
+-(void) setBankAccount:(BankAccount*) anAccount{
+    self.account = anAccount;
+}
+
 
 @end
 
 
-//Bank Account
+
 
 
 int main(int argc, const char * argv[]) {
